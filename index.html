@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>◊ FallClinicOnboard · sovereign UK healthcare clinic patient registration · CQC · NHS · GDPR · safeguarding</title>
+<meta name="description" content="Sovereign patient registration for UK healthcare clinics. NHS number capture, medical history, allergies, medications, consent (Gillick/MCA 2005), GDPR Art.9 special category, safeguarding flags, interpreter needs. Single HTML, IDB primary, MIT.">
+<meta name="prime" content="929">
+<meta name="theme-color" content="#0b0a0f">
+<link rel="manifest" href='data:application/manifest+json,{"name":"FallClinicOnboard","short_name":"clinic-onboard","start_url":"./","display":"standalone","background_color":"%230b0a0f","theme_color":"%23b8974a","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27><rect width=%27192%27 height=%27192%27 fill=%27%230b0a0f%27 rx=%2728%27/><text x=%2796%27 y=%27140%27 font-family=%27Georgia, serif%27 font-size=%27122%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+<style>
+:root{
+  --void:#0b0a0f;--void-2:#13121a;--ink:#1a1922;--ink-2:#22212c;
+  --line:#2a2934;--line-soft:#1f1e28;
+  --cream:#e6e1d6;--cream-dim:#a8a395;--cream-muted:#6e6a5e;
+  --brass:#b8974a;--amber:#ff8c00;--ox:#8b1a1a;
+  --green:#4ade80;--red:#ef4444;--blue:#60a5fa;--yellow:#fbbf24;
+  --serif:Georgia,'Libre Baskerville',ui-serif,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--cream);font:14px/1.55 var(--sans);min-height:100dvh;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;background:transparent;border:none;color:inherit}
+input,textarea,select{font-family:inherit;background:var(--ink);border:1px solid var(--line);color:var(--cream);border-radius:3px;padding:7px 10px;outline:none;font-size:13px}
+input:focus,textarea:focus,select:focus{border-color:var(--brass)}
+a{color:var(--brass)}a:hover{color:var(--amber)}
+.app{min-height:100dvh;display:grid;grid-template-rows:48px 1fr}
+header{display:flex;align-items:center;border-bottom:1px solid var(--line);background:var(--void-2);user-select:none}
+.brand{display:flex;align-items:center;gap:10px;padding:0 16px;height:100%;border-right:1px solid var(--line)}
+.brand .mark{width:28px;height:28px;background:linear-gradient(135deg,var(--brass),var(--amber));border-radius:5px;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--void)}
+.brand .name{font-family:var(--serif);font-weight:600;font-size:14px}
+.brand .seal{font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.18em;text-transform:uppercase}
+nav.tabs{display:flex;flex:1;overflow-x:auto;align-items:stretch}
+nav.tabs button{padding:0 14px;font-size:12px;color:var(--cream-dim);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;border-right:1px solid var(--line-soft);height:100%;white-space:nowrap;border-top:2px solid transparent}
+nav.tabs button:hover{background:var(--ink);color:var(--cream)}
+nav.tabs button.active{background:var(--ink);color:var(--brass);border-top-color:var(--brass)}
+.tools-r{display:flex;align-items:center;gap:5px;padding:0 14px;height:100%;border-left:1px solid var(--line)}
+.tool-btn{padding:5px 11px;border-radius:3px;font-size:11px;color:var(--cream-dim);letter-spacing:0.06em;text-transform:uppercase;font-family:var(--mono);border:1px solid var(--line)}
+.tool-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--brass)}
+main{padding:18px 22px 60px;overflow-y:auto;max-width:1100px;margin:0 auto;width:100%}
+.disclaimer{background:rgba(139,26,26,0.15);border:1px solid var(--ox);border-left:3px solid var(--ox);border-radius:3px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:var(--cream)}
+.disclaimer strong{color:var(--brass)}
+.section-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:14px;flex-wrap:wrap}
+.section-h h2{font-family:var(--serif);font-size:18px;font-weight:600}
+.section-h .sub{font-family:var(--mono);font-size:11px;color:var(--cream-muted);letter-spacing:0.08em;text-transform:uppercase}
+.section-h .actions{display:flex;gap:6px;flex-wrap:wrap}
+.card{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin-bottom:14px}
+.card h3{font-family:var(--serif);font-size:14px;font-weight:600;margin-bottom:10px;color:var(--cream)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.field label{display:block;font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px}
+.field input,.field select,.field textarea{width:100%}
+.field .hint{font-size:10px;color:var(--cream-muted);margin-top:3px;font-family:var(--mono)}
+.btn{padding:7px 14px;border:1px solid var(--brass);border-radius:3px;font-size:12px;color:var(--cream);background:transparent;letter-spacing:0.04em}
+.btn:hover{border-color:var(--amber);color:var(--amber)}
+.btn.brass{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.btn.brass:hover{background:var(--amber);border-color:var(--amber)}
+.btn.sm{padding:4px 9px;font-size:11px}
+.btn.danger:hover{border-color:var(--red);color:var(--red)}
+.btn.ghost{border-color:var(--line);color:var(--cream-dim)}
+.wizard{display:flex;flex-direction:column;gap:12px}
+.wizard-steps{display:flex;gap:0;overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--void-2)}
+.wizard-steps .ws{padding:8px 14px;font-size:11px;font-family:var(--mono);letter-spacing:0.04em;border-right:1px solid var(--line-soft);color:var(--cream-muted);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.wizard-steps .ws:last-child{border-right:none}
+.wizard-steps .ws:hover{background:var(--ink);color:var(--cream)}
+.wizard-steps .ws.active{background:var(--ink);color:var(--brass);border-top:2px solid var(--brass)}
+.wizard-steps .ws.done{color:var(--green)}
+.wizard-steps .ws.done::before{content:'✓';margin-right:2px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:top}
+th{color:var(--brass);font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+.tag{display:inline-block;padding:2px 7px;border-radius:11px;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--brass);color:var(--brass)}
+.tag.green{border-color:var(--green);color:var(--green)}
+.tag.red{border-color:var(--red);color:var(--red)}
+.tag.amber{border-color:var(--amber);color:var(--amber)}
+.tag.muted{border-color:var(--cream-muted);color:var(--cream-muted)}
+.empty{padding:24px;text-align:center;color:var(--cream-muted);font-style:italic;font-size:12px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto;padding:6px}
+.msg{padding:10px 14px;border-radius:6px;max-width:88%;font-size:13px;line-height:1.55;white-space:pre-wrap}
+.msg.user{background:var(--ink);align-self:flex-end;border-bottom-right-radius:2px}
+.msg.bot{background:var(--void-2);border:1px solid var(--line);border-left:2px solid var(--brass);align-self:flex-start;border-bottom-left-radius:2px}
+.msg .src{font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.08em;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.chat-input{display:flex;gap:8px;margin-top:10px}
+.chat-input input{flex:1;padding:11px 14px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:18px;z-index:900;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--void-2);border:1px solid var(--brass);border-radius:4px;padding:22px;max-width:700px;width:100%;max-height:90vh;overflow:auto}
+.modal h2{font-family:var(--serif);font-size:17px;margin-bottom:14px}
+.modal .actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brass);color:var(--void);padding:9px 18px;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;opacity:0;transition:all 0.22s;z-index:1100;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.allergy-list{list-style:none}
+.allergy-list li{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line-soft);font-size:13px}
+.allergy-list li .sev{font-family:var(--mono);font-size:10px}
+@media(max-width:760px){nav.tabs button{padding:0 11px;font-size:11px}main{padding:14px 14px 50px}.row,.row3{grid-template-columns:1fr}.wizard-steps{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">
+    <div class="mark">◊</div>
+    <div><div class="name">FallClinicOnboard</div></div>
+    <div class="seal">v1 · prime 929</div>
+  </div>
+  <nav class="tabs" id="tabNav"></nav>
+  <div class="tools-r">
+    <button class="tool-btn" id="tierBadge" onclick="openModal('settings')">T0</button>
+    <button class="tool-btn" onclick="openModal('settings')">⚙</button>
+  </div>
+</header>
+<main id="view"></main>
+</div>
+<div class="modal-bg" id="modal">
+  <div class="modal"><h2 id="modalTitle">.</h2><div id="modalBody"></div></div>
+</div>
+<div class="toast" id="toast">.</div>
+
+<script>
+'use strict';
+const TOOLNAME='fallcliniconboard',VERSION='1.0.0',PRIME=929,STORE='fallcliniconboard-v1';
+const TABS=[{id:'register',label:'register'},{id:'patients',label:'patients'},{id:'firm',label:'practice'},{id:'qa',label:'Q&A'}];
+
+function newPatientRec(){return {
+  id:'',ts:0,updatedAt:0,isDemo:false,status:'new',wizardStep:0,
+  demographics:{title:'',firstName:'',lastName:'',dob:'',sex:'',gender:'',ethnicity:'',nhsNumber:'',hospitalNumber:'',address:'',postcode:'',phone:'',email:'',nokName:'',nokRelation:'',nokPhone:'',interpreterNeeded:false,interpreterLanguage:'',registeredGP:'',gpPractice:'',gpAddress:''},
+  medical:{conditions:[],allergies:[],medications:[],surgeries:'',familyHistory:'',smokingStatus:'never',alcoholUnits:0,substanceUse:'none',disabilities:'',mentalHealth:'',immunisations:''},
+  consent:{gdprConsent:false,gdprConsentDate:null,treatmentConsent:false,treatmentConsentDate:null,dataSharing:false,dataSharingOrgs:'',researchConsent:false,photographConsent:false,electronicComms:false,capacityAssessed:false,capacityOutcome:'',gillickAssessed:false,gillickCompetent:false,bestInterestDecision:'',lpa:false,lpaDetails:''},
+  safeguarding:{flagged:false,category:'',details:'',referralMade:false,referralDate:null,referralTo:'',riskLevel:'low',childProtectionPlan:false,adultAtRisk:false,domesticAbuse:false,marac:false},
+  documents:[],
+}}
+
+let state={active:'register',firm:null,patients:[],audit:[],currentPatient:null,wizardStep:0,chat:[],
+  settings:{anthropicKey:'',auditChain:true,autoBroadcast:true}};
+
+const $=(s,p=document)=>p.querySelector(s);const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+const uid=p=>(p||'')+'_'+Math.random().toString(36).slice(2,11);
+const now=()=>Date.now();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateStr=ts=>{if(!ts)return '—';return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),1900)}
+async function sha256(s){const buf=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',buf);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
+
+let db;
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open(STORE,1);r.onupgradeneeded=e=>{const d=e.target.result;['state','audit','patients','firms'].forEach(s=>{if(!d.objectStoreNames.contains(s))d.createObjectStore(s,{keyPath:s==='state'?undefined:'id'})})};r.onsuccess=e=>{db=e.target.result;res(db)};r.onerror=rej})}
+function idbGetAll(s){return new Promise(res=>{const tx=db.transaction(s,'readonly');const q=tx.objectStore(s).getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>res([])})}
+function idbGet(s,k){return new Promise(res=>{const tx=db.transaction(s,'readonly');const q=tx.objectStore(s).get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)})}
+function idbPut(s,v,k){return new Promise(res=>{const tx=db.transaction(s,'readwrite');const o=tx.objectStore(s);const q=k!=null?o.put(v,k):o.put(v);q.onsuccess=()=>res(true);q.onerror=()=>res(false)})}
+
+async function loadAll(){if(!db)await openDB();const[firms,patients,auditArr,uiState]=await Promise.all([idbGetAll('firms'),idbGetAll('patients'),idbGetAll('audit'),idbGet('state','ui')]);state.firm=firms[0]||null;state.patients=patients;state.audit=auditArr.sort((a,b)=>a.i-b.i);if(uiState){Object.assign(state,{active:uiState.active||state.active,currentPatient:uiState.currentPatient||null,wizardStep:uiState.wizardStep||0,chat:uiState.chat||[],settings:Object.assign({},state.settings,uiState.settings||{})});}}
+async function persistUI(){await idbPut('state',{active:state.active,currentPatient:state.currentPatient,wizardStep:state.wizardStep,chat:state.chat,settings:state.settings},'ui')}
+async function auditLog(action,opts={}){if(!state.settings.auditChain)return;const prev=state.audit.length?state.audit[state.audit.length-1]:null;const prevHash=prev?prev.docHash:'';const i=(prev?prev.i:0)+1;const entry={id:uid('au'),i,ts:now(),tool:TOOLNAME,action,reasoning:opts.reasoning||'',configVersion:TOOLNAME+'@'+VERSION,prevHash,docHash:'',payload:opts.payload||{}};entry.docHash=await sha256(JSON.stringify({i,ts:entry.ts,action,prevHash,payload:entry.payload}));state.audit.push(entry);await idbPut('audit',entry)}
+
+let bcClinic,bcSignal;
+function initMesh(){try{bcSignal=new BroadcastChannel('fall-signal');bcSignal.postMessage({source:TOOLNAME,type:'hello',prime:PRIME,version:VERSION,ts:now()})}catch(e){}try{bcClinic=new BroadcastChannel('fall-clinic');bcClinic.addEventListener('message',async e=>{const m=e.data;if(!m||m.source===TOOLNAME)return;if(m.type==='sync.request'){bcClinic.postMessage({v:1,type:'sync.snapshot',source:TOOLNAME,ts:now(),payload:{patients:state.patients,firm:state.firm}})}});bcClinic.postMessage({v:1,type:'sync.request',ts:now(),source:TOOLNAME})}catch(e){}}
+function broadcastUpdate(){try{if(bcClinic)bcClinic.postMessage({v:1,type:'sync.snapshot',source:TOOLNAME,ts:now(),payload:{patients:state.patients,firm:state.firm}})}catch(e){}}
+
+const ALL_STEPS=[
+  {id:'demographics',label:'Demographics'},
+  {id:'medical',label:'Medical History'},
+  {id:'allergies',label:'Allergies & Meds'},
+  {id:'consent',label:'Consent & GDPR'},
+  {id:'safeguarding',label:'Safeguarding'},
+  {id:'documents',label:'Documents'},
+];
+function getSteps(){return ALL_STEPS}
+
+function render(){renderTabs();const v=$('#view');switch(state.active){case 'register':return renderRegister(v);case 'patients':return renderPatients(v);case 'firm':return renderFirm(v);case 'qa':return renderQA(v);}}
+function renderTabs(){$('#tabNav').innerHTML=TABS.map(t=>`<button class="${state.active===t.id?'active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('')}
+function switchTab(id){state.active=id;persistUI();render()}
+
+function renderRegister(v){
+  const p=state.currentPatient?state.patients.find(x=>x.id===state.currentPatient):null;
+  if(!p){v.innerHTML=`<div class="disclaimer"><strong>◊ Regulatory notice:</strong> FallClinicOnboard captures patient registration data under GDPR Article 9 (special category health data). The practice is the data controller. Caldicott Principles apply. This tool does not replace clinical systems (EMIS/SystmOne). Data never leaves this device.</div>
+    <div class="section-h"><h2>Patient Registration</h2><div class="actions"><button class="btn brass" onclick="newPatient()">+ New Patient</button></div></div>
+    <div class="empty"><h3>Select or create a patient</h3><p>Start a new registration or select from the Patients tab.</p></div>`;return;}
+  const steps=getSteps();
+  v.innerHTML=`<div class="section-h"><h2>${esc((p.demographics.title+' '+p.demographics.firstName+' '+p.demographics.lastName).trim()||'New Patient')}</h2><div class="sub">${esc(p.demographics.nhsNumber?'NHS '+p.demographics.nhsNumber:p.id.slice(0,10))}</div></div>
+  <div class="wizard">
+    <div class="wizard-steps">${steps.map((s,i)=>`<div class="ws ${i===state.wizardStep?'active':''} ${i<state.wizardStep?'done':''}" onclick="goStep(${i})">${s.label}</div>`).join('')}</div>
+    <div class="card" id="stepContent">${renderStep(p,steps[state.wizardStep])}</div>
+    <div style="display:flex;justify-content:space-between">
+      <button class="btn ghost" onclick="prevStep()" ${state.wizardStep===0?'disabled':''}>← Back</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="saveCurrentPatient()">Save</button>
+        ${state.wizardStep<steps.length-1?`<button class="btn brass" onclick="nextStep()">Next →</button>`:`<button class="btn brass" onclick="completeRegistration()">Complete</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderStep(p,step){
+  const d=p.demographics,m=p.medical,c=p.consent,s=p.safeguarding;
+  switch(step.id){
+    case 'demographics':return `<h3>Demographics</h3>
+      <div class="row3"><div class="field"><label>Title</label><select id="wTitle"><option value="">—</option>${['Mr','Mrs','Ms','Miss','Mx','Dr','Prof'].map(t=>`<option ${d.title===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="field"><label>First name</label><input id="wFirst" value="${esc(d.firstName)}"></div><div class="field"><label>Last name</label><input id="wLast" value="${esc(d.lastName)}"></div></div>
+      <div class="row3"><div class="field"><label>DOB</label><input type="date" id="wDob" value="${esc(d.dob)}"></div><div class="field"><label>Sex (biological)</label><select id="wSex"><option value="">—</option>${['Male','Female','Intersex'].map(t=>`<option ${d.sex===t?'selected':''}>${t}</option>`).join('')}</select></div><div class="field"><label>Gender</label><input id="wGender" value="${esc(d.gender)}" placeholder="optional"></div></div>
+      <div class="row"><div class="field"><label>NHS number</label><input id="wNhs" value="${esc(d.nhsNumber)}" pattern="[0-9]{10}" placeholder="10 digits"></div><div class="field"><label>Hospital number</label><input id="wHosp" value="${esc(d.hospitalNumber)}"></div></div>
+      <div class="field"><label>Address</label><input id="wAddr" value="${esc(d.address)}"></div>
+      <div class="row"><div class="field"><label>Postcode</label><input id="wPC" value="${esc(d.postcode)}"></div><div class="field"><label>Ethnicity</label><select id="wEth"><option value="">—</option>${['White British','White Irish','White Other','Mixed White/Black Caribbean','Mixed White/Black African','Mixed White/Asian','Mixed Other','Asian Indian','Asian Pakistani','Asian Bangladeshi','Asian Chinese','Asian Other','Black African','Black Caribbean','Black Other','Arab','Other'].map(t=>`<option ${d.ethnicity===t?'selected':''}>${t}</option>`).join('')}</select></div></div>
+      <div class="row"><div class="field"><label>Phone</label><input id="wPhone" value="${esc(d.phone)}"></div><div class="field"><label>Email</label><input id="wEmail" value="${esc(d.email)}"></div></div>
+      <div class="row3"><div class="field"><label>NOK name</label><input id="wNokN" value="${esc(d.nokName)}"></div><div class="field"><label>NOK relation</label><input id="wNokR" value="${esc(d.nokRelation)}"></div><div class="field"><label>NOK phone</label><input id="wNokP" value="${esc(d.nokPhone)}"></div></div>
+      <div class="row"><div class="field"><label style="font-size:11px"><input type="checkbox" id="wInterp" ${d.interpreterNeeded?'checked':''}> Interpreter needed</label></div><div class="field"><label>Language</label><input id="wInterpLang" value="${esc(d.interpreterLanguage)}"></div></div>
+      <div class="row"><div class="field"><label>Registered GP</label><input id="wGP" value="${esc(d.registeredGP)}"></div><div class="field"><label>GP practice</label><input id="wGPPrac" value="${esc(d.gpPractice)}"></div></div>`;
+
+    case 'medical':return `<h3>Medical History</h3>
+      <div class="field"><label>Current conditions (comma separated)</label><textarea id="wConds" rows="3">${esc(m.conditions.join(', '))}</textarea></div>
+      <div class="field"><label>Previous surgeries / procedures</label><textarea id="wSurg" rows="2">${esc(m.surgeries)}</textarea></div>
+      <div class="field"><label>Family history</label><textarea id="wFamHx" rows="2">${esc(m.familyHistory)}</textarea></div>
+      <div class="row3"><div class="field"><label>Smoking</label><select id="wSmoke"><option value="never" ${m.smokingStatus==='never'?'selected':''}>never</option><option value="ex" ${m.smokingStatus==='ex'?'selected':''}>ex-smoker</option><option value="current" ${m.smokingStatus==='current'?'selected':''}>current</option></select></div><div class="field"><label>Alcohol (units/wk)</label><input type="number" id="wAlc" value="${m.alcoholUnits||0}"></div><div class="field"><label>Substance use</label><select id="wSubst"><option value="none" ${m.substanceUse==='none'?'selected':''}>none</option><option value="recreational" ${m.substanceUse==='recreational'?'selected':''}>recreational</option><option value="dependent" ${m.substanceUse==='dependent'?'selected':''}>dependent</option><option value="in-recovery" ${m.substanceUse==='in-recovery'?'selected':''}>in recovery</option></select></div></div>
+      <div class="field"><label>Disabilities / mobility</label><input id="wDisab" value="${esc(m.disabilities)}"></div>
+      <div class="field"><label>Mental health</label><input id="wMH" value="${esc(m.mentalHealth)}"></div>
+      <div class="field"><label>Immunisations</label><input id="wImmun" value="${esc(m.immunisations)}"></div>`;
+
+    case 'allergies':return `<h3>Allergies & Current Medications</h3>
+      <div class="card" style="margin-bottom:12px"><h3>Allergies</h3>
+        <ul class="allergy-list" id="allergyList">${(m.allergies||[]).map((a,i)=>`<li><span class="tag ${a.severity==='severe'?'red':a.severity==='moderate'?'amber':'muted'}">${esc(a.severity)}</span> <strong>${esc(a.allergen)}</strong> — ${esc(a.reaction)} <button class="btn sm danger" onclick="removeAllergy(${i})">×</button></li>`).join('')}</ul>
+        ${m.allergies.length===0?'<div class="empty">No known allergies (NKDA) — or add below</div>':''}
+        <div class="row3" style="margin-top:8px"><div class="field"><label>Allergen</label><input id="aAllergen"></div><div class="field"><label>Reaction</label><input id="aReaction"></div><div class="field"><label>Severity</label><select id="aSev"><option>mild</option><option>moderate</option><option>severe</option></select></div></div>
+        <button class="btn sm" onclick="addAllergy()">+ Add allergy</button>
+      </div>
+      <div class="card"><h3>Current Medications</h3>
+        <div class="field"><label>Medications (name, dose, frequency — one per line)</label><textarea id="wMeds" rows="4">${esc(m.medications.join('\n'))}</textarea></div>
+      </div>`;
+
+    case 'consent':return `<h3>Consent & GDPR</h3>
+      <div class="card" style="margin-bottom:12px"><h3>GDPR Article 9 — Special Category Data</h3>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wGdpr" ${c.gdprConsent?'checked':''}> Patient consents to processing of health data under GDPR Art.9(2)(h) — healthcare purposes. The practice is data controller.</label></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wDataShare" ${c.dataSharing?'checked':''}> Patient consents to sharing data with: ${esc(c.dataSharingOrgs||'NHS Digital, referral providers')}</label></div>
+        <div class="field"><label>Data sharing organisations</label><input id="wShareOrgs" value="${esc(c.dataSharingOrgs)}"></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wResearch" ${c.researchConsent?'checked':''}> Consent to anonymised data use for research</label></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wPhoto" ${c.photographConsent?'checked':''}> Consent to clinical photography</label></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wEcomms" ${c.electronicComms?'checked':''}> Consent to electronic communications (SMS/email appointment reminders)</label></div>
+      </div>
+      <div class="card" style="margin-bottom:12px"><h3>Treatment Consent</h3>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wTreatConsent" ${c.treatmentConsent?'checked':''}> Patient gives informed consent to examination and treatment</label></div>
+      </div>
+      <div class="card"><h3>Capacity & Gillick</h3>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wCapacity" ${c.capacityAssessed?'checked':''}> Mental Capacity Act 2005 assessment performed</label></div>
+        <div class="field"><label>Capacity outcome</label><select id="wCapOut"><option value="">—</option><option ${c.capacityOutcome==='has-capacity'?'selected':''} value="has-capacity">has capacity</option><option ${c.capacityOutcome==='lacks-capacity'?'selected':''} value="lacks-capacity">lacks capacity</option><option ${c.capacityOutcome==='fluctuating'?'selected':''} value="fluctuating">fluctuating capacity</option></select></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wGillick" ${c.gillickAssessed?'checked':''}> Gillick competence assessed (under 16)</label></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wGillickComp" ${c.gillickCompetent?'checked':''}> Gillick competent — can consent independently</label></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wLpa" ${c.lpa?'checked':''}> Lasting Power of Attorney (Health & Welfare) in place</label></div>
+        <div class="field"><label>LPA / best interest details</label><textarea id="wLpaDetail" rows="2">${esc(c.lpaDetails)}</textarea></div>
+      </div>`;
+
+    case 'safeguarding':return `<h3>Safeguarding</h3>
+      <div class="card">
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wSafFlag" ${s.flagged?'checked':''}> Safeguarding concern flagged</label></div>
+        <div class="field"><label>Category</label><select id="wSafCat"><option value="">—</option><option ${s.category==='child-neglect'?'selected':''} value="child-neglect">child neglect</option><option ${s.category==='child-abuse'?'selected':''} value="child-abuse">child abuse (physical/emotional/sexual)</option><option ${s.category==='adult-neglect'?'selected':''} value="adult-neglect">adult neglect</option><option ${s.category==='adult-abuse'?'selected':''} value="adult-abuse">adult abuse</option><option ${s.category==='domestic-abuse'?'selected':''} value="domestic-abuse">domestic abuse</option><option ${s.category==='self-neglect'?'selected':''} value="self-neglect">self-neglect</option><option ${s.category==='modern-slavery'?'selected':''} value="modern-slavery">modern slavery</option><option ${s.category==='fgm'?'selected':''} value="fgm">FGM</option><option ${s.category==='prevent'?'selected':''} value="prevent">Prevent (radicalisation)</option><option ${s.category==='other'?'selected':''} value="other">other</option></select></div>
+        <div class="field"><label>Details</label><textarea id="wSafDet" rows="3">${esc(s.details)}</textarea></div>
+        <div class="field"><label>Risk level</label><select id="wSafRisk"><option ${s.riskLevel==='low'?'selected':''} value="low">low</option><option ${s.riskLevel==='medium'?'selected':''} value="medium">medium</option><option ${s.riskLevel==='high'?'selected':''} value="high">high</option></select></div>
+        <div class="field"><label style="font-size:12px"><input type="checkbox" id="wRefMade" ${s.referralMade?'checked':''}> Referral made</label></div>
+        <div class="field"><label>Referred to</label><input id="wRefTo" value="${esc(s.referralTo)}"></div>
+        <div class="row">
+          <div class="field"><label style="font-size:12px"><input type="checkbox" id="wCPP" ${s.childProtectionPlan?'checked':''}> Child Protection Plan</label></div>
+          <div class="field"><label style="font-size:12px"><input type="checkbox" id="wAdultRisk" ${s.adultAtRisk?'checked':''}> Adult at Risk</label></div>
+        </div>
+        <div class="row">
+          <div class="field"><label style="font-size:12px"><input type="checkbox" id="wDA" ${s.domesticAbuse?'checked':''}> Domestic abuse</label></div>
+          <div class="field"><label style="font-size:12px"><input type="checkbox" id="wMARAC" ${s.marac?'checked':''}> MARAC referral</label></div>
+        </div>
+      </div>`;
+
+    case 'documents':return `<h3>Documents</h3>
+      <div class="field"><label>Upload document</label><input type="file" id="docFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"></div>
+      <button class="btn sm" onclick="captureDoc()" style="margin-top:6px">Upload & hash</button>
+      ${p.documents.length?`<table style="margin-top:12px"><thead><tr><th>Name</th><th>Type</th><th>Hash</th><th>Date</th></tr></thead><tbody>${p.documents.map(d=>`<tr><td>${esc(d.name)}</td><td>${esc(d.type)}</td><td style="font-family:var(--mono);font-size:10px;color:var(--cream-muted)">${esc(d.hash)}</td><td>${dateStr(d.ts)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">No documents uploaded.</div>'}`;
+  }
+  return '';
+}
+
+function collectStep(p,step){
+  switch(step.id){
+    case 'demographics':{const d=p.demographics;d.title=$('#wTitle')?.value||d.title;d.firstName=$('#wFirst')?.value?.trim()||d.firstName;d.lastName=$('#wLast')?.value?.trim()||d.lastName;d.dob=$('#wDob')?.value||d.dob;d.sex=$('#wSex')?.value||d.sex;d.gender=$('#wGender')?.value?.trim()||d.gender;d.nhsNumber=$('#wNhs')?.value?.trim()||d.nhsNumber;d.hospitalNumber=$('#wHosp')?.value?.trim()||d.hospitalNumber;d.address=$('#wAddr')?.value?.trim()||d.address;d.postcode=$('#wPC')?.value?.trim()||d.postcode;d.ethnicity=$('#wEth')?.value||d.ethnicity;d.phone=$('#wPhone')?.value?.trim()||d.phone;d.email=$('#wEmail')?.value?.trim()||d.email;d.nokName=$('#wNokN')?.value?.trim()||d.nokName;d.nokRelation=$('#wNokR')?.value?.trim()||d.nokRelation;d.nokPhone=$('#wNokP')?.value?.trim()||d.nokPhone;d.interpreterNeeded=$('#wInterp')?.checked||false;d.interpreterLanguage=$('#wInterpLang')?.value?.trim()||d.interpreterLanguage;d.registeredGP=$('#wGP')?.value?.trim()||d.registeredGP;d.gpPractice=$('#wGPPrac')?.value?.trim()||d.gpPractice;break;}
+    case 'medical':{const m=p.medical;m.conditions=($('#wConds')?.value||'').split(',').map(s=>s.trim()).filter(Boolean);m.surgeries=$('#wSurg')?.value?.trim()||m.surgeries;m.familyHistory=$('#wFamHx')?.value?.trim()||m.familyHistory;m.smokingStatus=$('#wSmoke')?.value||m.smokingStatus;m.alcoholUnits=+$('#wAlc')?.value||0;m.substanceUse=$('#wSubst')?.value||m.substanceUse;m.disabilities=$('#wDisab')?.value?.trim()||m.disabilities;m.mentalHealth=$('#wMH')?.value?.trim()||m.mentalHealth;m.immunisations=$('#wImmun')?.value?.trim()||m.immunisations;break;}
+    case 'allergies':{const m=p.medical;m.medications=($('#wMeds')?.value||'').split('\n').map(s=>s.trim()).filter(Boolean);break;}
+    case 'consent':{const c=p.consent;c.gdprConsent=$('#wGdpr')?.checked||false;if(c.gdprConsent&&!c.gdprConsentDate)c.gdprConsentDate=now();c.treatmentConsent=$('#wTreatConsent')?.checked||false;if(c.treatmentConsent&&!c.treatmentConsentDate)c.treatmentConsentDate=now();c.dataSharing=$('#wDataShare')?.checked||false;c.dataSharingOrgs=$('#wShareOrgs')?.value?.trim()||c.dataSharingOrgs;c.researchConsent=$('#wResearch')?.checked||false;c.photographConsent=$('#wPhoto')?.checked||false;c.electronicComms=$('#wEcomms')?.checked||false;c.capacityAssessed=$('#wCapacity')?.checked||false;c.capacityOutcome=$('#wCapOut')?.value||c.capacityOutcome;c.gillickAssessed=$('#wGillick')?.checked||false;c.gillickCompetent=$('#wGillickComp')?.checked||false;c.lpa=$('#wLpa')?.checked||false;c.lpaDetails=$('#wLpaDetail')?.value?.trim()||c.lpaDetails;break;}
+    case 'safeguarding':{const sg=p.safeguarding;sg.flagged=$('#wSafFlag')?.checked||false;sg.category=$('#wSafCat')?.value||sg.category;sg.details=$('#wSafDet')?.value?.trim()||sg.details;sg.riskLevel=$('#wSafRisk')?.value||sg.riskLevel;sg.referralMade=$('#wRefMade')?.checked||false;sg.referralTo=$('#wRefTo')?.value?.trim()||sg.referralTo;sg.childProtectionPlan=$('#wCPP')?.checked||false;sg.adultAtRisk=$('#wAdultRisk')?.checked||false;sg.domesticAbuse=$('#wDA')?.checked||false;sg.marac=$('#wMARAC')?.checked||false;break;}
+  }
+}
+
+function goStep(i){const p=state.patients.find(x=>x.id===state.currentPatient);if(p)collectStep(p,getSteps()[state.wizardStep]);state.wizardStep=i;persistUI();render()}
+function nextStep(){const p=state.patients.find(x=>x.id===state.currentPatient);if(p)collectStep(p,getSteps()[state.wizardStep]);state.wizardStep=Math.min(state.wizardStep+1,getSteps().length-1);persistUI();render()}
+function prevStep(){const p=state.patients.find(x=>x.id===state.currentPatient);if(p)collectStep(p,getSteps()[state.wizardStep]);state.wizardStep=Math.max(state.wizardStep-1,0);persistUI();render()}
+
+async function saveCurrentPatient(){const p=state.patients.find(x=>x.id===state.currentPatient);if(!p){toast('No patient');return}collectStep(p,getSteps()[state.wizardStep]);p.updatedAt=now();await idbPut('patients',p);await auditLog('patient.saved',{reasoning:'wizard save',payload:{patientId:p.id}});toast('Saved');broadcastUpdate();render()}
+
+async function newPatient(){const p=newPatientRec();p.id=uid('pt');p.ts=now();p.updatedAt=now();state.patients.push(p);state.currentPatient=p.id;state.wizardStep=0;await idbPut('patients',p);await auditLog('patient.created',{payload:{patientId:p.id}});persistUI();render()}
+
+function addAllergy(){const allergen=$('#aAllergen')?.value?.trim();const reaction=$('#aReaction')?.value?.trim();const severity=$('#aSev')?.value||'mild';if(!allergen)return;const p=state.patients.find(x=>x.id===state.currentPatient);if(!p)return;p.medical.allergies.push({allergen,reaction,severity});render()}
+function removeAllergy(i){const p=state.patients.find(x=>x.id===state.currentPatient);if(!p)return;p.medical.allergies.splice(i,1);render()}
+
+async function captureDoc(){const inp=$('#docFile');if(!inp||!inp.files.length)return;const f=inp.files[0];const buf=await f.arrayBuffer();const hashBuf=await crypto.subtle.digest('SHA-256',buf);const hash=Array.from(new Uint8Array(hashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);const p=state.patients.find(x=>x.id===state.currentPatient);if(!p)return;p.documents.push({name:f.name,type:f.type,size:f.size,hash,ts:now()});await idbPut('patients',p);await auditLog('document.captured',{payload:{patientId:p.id,hash}});toast('Document hashed');render()}
+
+async function completeRegistration(){const p=state.patients.find(x=>x.id===state.currentPatient);if(!p)return;collectStep(p,getSteps()[state.wizardStep]);p.status='complete';p.updatedAt=now();await idbPut('patients',p);await auditLog('patient.completed',{payload:{patientId:p.id}});toast('Registration complete');broadcastUpdate();render()}
+
+function renderPatients(v){
+  const pts=state.patients.sort((a,b)=>b.updatedAt-a.updatedAt);
+  v.innerHTML=`<div class="section-h"><h2>Patients</h2><div class="sub">${pts.length}</div><div class="actions"><button class="btn brass" onclick="newPatient()">+ New</button></div></div>
+  ${pts.length?`<table><thead><tr><th>Name</th><th>NHS</th><th>DOB</th><th>Status</th><th>Safeguarding</th></tr></thead><tbody>${pts.map(p=>{const name=(p.demographics.title+' '+p.demographics.firstName+' '+p.demographics.lastName).trim()||p.id.slice(0,10);return `<tr style="cursor:pointer" onclick="selectPatient('${p.id}')"><td>${esc(name)}</td><td style="font-family:var(--mono);font-size:12px">${esc(p.demographics.nhsNumber||'—')}</td><td>${esc(p.demographics.dob||'—')}</td><td><span class="tag ${p.status==='complete'?'green':p.status==='new'?'muted':'amber'}">${p.status}</span></td><td>${p.safeguarding.flagged?`<span class="tag red">${esc(p.safeguarding.riskLevel)}</span>`:'—'}</td></tr>`}).join('')}</tbody></table>`:'<div class="empty">No patients registered.</div>'}`;
+}
+function selectPatient(id){state.currentPatient=id;state.wizardStep=0;state.active='register';persistUI();render()}
+
+function renderFirm(v){const f=state.firm||{};
+  v.innerHTML=`<div class="section-h"><h2>Practice Setup</h2></div><div class="card" style="max-width:620px">
+    <div class="row"><div class="field"><label>Practice name</label><input id="fName" value="${esc(f.name||'')}"></div><div class="field"><label>Email</label><input id="fEmail" value="${esc(f.email||'')}"></div></div>
+    <div class="field"><label>Address</label><input id="fAddr" value="${esc(f.address||'')}"></div>
+    <div class="row"><div class="field"><label>Phone</label><input id="fPhone" value="${esc(f.phone||'')}"></div><div class="field"><label>CQC registration</label><input id="fCqc" value="${esc(f.cqcRegistration||'')}"></div></div>
+    <div class="row"><div class="field"><label>ICO registration (DPA 2018)</label><input id="fIco" value="${esc(f.icoRegistration||'')}"></div><div class="field"><label>Caldicott Guardian</label><input id="fCald" value="${esc(f.caldicottGuardian||'')}"></div></div>
+    <button class="btn brass" onclick="saveFirmForm()" style="margin-top:8px">Save</button>
+  </div>`;
+}
+async function saveFirmForm(){const f=state.firm||{id:uid('fi'),ts:now()};f.name=$('#fName').value.trim();f.email=$('#fEmail').value.trim();f.address=$('#fAddr').value.trim();f.phone=$('#fPhone').value.trim();f.cqcRegistration=$('#fCqc').value.trim();f.icoRegistration=$('#fIco').value.trim();f.caldicottGuardian=$('#fCald').value.trim();f.updatedAt=now();state.firm=f;await idbPut('firms',f);await auditLog('firm.saved');toast('Saved');render()}
+
+const T0_QA=[
+  {q:/gdpr|data protection|article.?9|special category/i,a:'GDPR Article 9 governs processing of special category data including health data. Lawful basis for healthcare: Art.9(2)(h) — necessary for provision of health care under the responsibility of a health professional. Data controller (the practice) must maintain records of processing (Art.30), conduct DPIAs for high-risk processing, register with the ICO, appoint a DPO if large-scale processing. UK GDPR (DPA 2018) supplements EU GDPR post-Brexit.'},
+  {q:/caldicott|principle/i,a:'Caldicott Principles (updated 2023, 8 principles): 1. Justify the purpose 2. Don\'t use patient data unless necessary 3. Use minimum necessary 4. Access on need-to-know basis 5. Everyone has duty of confidentiality 6. Comply with the law 7. Duty to share can be as important as duty to protect 8. Inform patients about use of their data. Every NHS/social care org must have a Caldicott Guardian.'},
+  {q:/consent|gillick|capacity|mca/i,a:'Consent framework: Adults (16+) presumed to have capacity (Mental Capacity Act 2005). Capacity is decision-specific and time-specific. 2-stage test: (1) impairment of mind/brain, (2) unable to understand/retain/use/communicate. Under 16: Gillick competence — can consent if sufficient understanding and intelligence. Fraser guidelines for contraception. Best interest decisions for those lacking capacity. Lasting Power of Attorney (Health & Welfare) allows attorney to consent.'},
+  {q:/safeguard|child|adult|prevent|fgm/i,a:'Safeguarding duties: Children Act 1989/2004 — duty to safeguard and promote welfare. Care Act 2014 s.42 — duty to make enquiries for adults at risk. Mandatory reporting: FGM (Serious Crime Act 2015 s.74), Prevent (Counter-Terrorism & Security Act 2015), child protection (Working Together 2018). MARAC referral for domestic abuse. Record, refer to local authority MASH/safeguarding team, document decisions.'},
+  {q:/nhs.?number|pds|spine/i,a:'NHS number is the unique 10-digit patient identifier used across all NHS services. Format: 3-digit blocks (e.g. 943 476 5919). Validated by Modulus 11 check digit. PDS (Personal Demographics Service) on the NHS Spine is the master patient index. Practices should verify NHS number at registration. Hospital number is the local trust identifier.'},
+  {q:/allergy|adverse|reaction/i,a:'Allergy recording: use structured coding (dm+d / SNOMED CT). Severity: mild (localised reaction), moderate (systemic but not life-threatening), severe (anaphylaxis risk). Record: allergen, reaction type, severity, date of onset. Drug allergies must be recorded in clinical system and visible at prescribing. NKDA (No Known Drug Allergies) should be explicitly recorded.'},
+  {q:/cqc|registration|inspection/i,a:'Care Quality Commission (CQC) regulates all health and social care providers in England. Registration required before providing regulated activities. 5 key questions: Safe, Effective, Caring, Responsive, Well-led. Ratings: Outstanding, Good, Requires Improvement, Inadequate. Inspection framework includes patient safety, clinical governance, safeguarding, medicines management, infection control.'},
+  {q:/interpreter|language|accessible/i,a:'Equality Act 2010 requires reasonable adjustments. NHS Constitution: right to be communicated with in a way you can understand. NHS Accessible Information Standard: identify, record, flag, share, meet communication needs. Professional interpreters required for clinical consultations — family members should not interpret for clinical discussions. Language Line / in-person interpreters.'},
+  {q:/medication|prescrib|drug/i,a:'Current medications should be recorded at registration with: drug name (generic/brand), dose, frequency, route, prescriber, indication. Medication reconciliation at transitions of care (NICE NG5). Check for interactions and allergies. Over-the-counter medications and supplements should be recorded. Summary Care Record (SCR) contains current medications, allergies, and adverse reactions.'},
+  {q:/record|retention|destroy/i,a:'NHS records retention: GP records — 10 years after death or after patient leaves practice (whichever longer). Hospital records — 8 years after last attendance (adults), until 25th birthday or 8 years after death (children). Mental health — 20 years after last contact. Maternity — 25 years. Records must be destroyed confidentially. NHS Digital Data Security and Protection Toolkit applies.'},
+];
+function askT0(q){for(const r of T0_QA){if(r.q.test(q))return {answer:r.a,source:'T0 · UK healthcare rules'};}return null}
+async function askT3(q){if(!state.settings.anthropicKey)return null;try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'x-api-key':state.settings.anthropicKey,'anthropic-version':'2023-06-01','content-type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:'You are a UK healthcare clinic operations expert. CQC, GDPR, safeguarding, consent, NHS. Concise.\n\n'+q}]})});if(!res.ok)return null;const j=await res.json();return {answer:j.content?.[0]?.text,source:'T3 · Anthropic'}}catch(e){return null}}
+
+function renderQA(v){v.innerHTML=`<div class="section-h"><h2>Q & A</h2><div class="sub">T0 + T3 BYOK</div></div><div class="card" style="max-width:780px"><div class="chat" id="chatBox">${(state.chat||[]).map(m=>`<div class="msg ${m.role}">${esc(m.text)}${m.source?`<div class="src">${esc(m.source)}</div>`:''}</div>`).join('')}</div><div class="chat-input"><input id="chatIn" placeholder="Ask… 'GDPR health data?' · 'Gillick competence?' · 'Safeguarding duties?'" onkeydown="if(event.key==='Enter')askQuestion()"><button class="btn brass" onclick="askQuestion()">Ask</button></div></div>`;const box=$('#chatBox');if(box)box.scrollTop=box.scrollHeight}
+async function askQuestion(){const inp=$('#chatIn');if(!inp)return;const q=inp.value.trim();if(!q)return;inp.value='';if(!state.chat)state.chat=[];state.chat.push({role:'user',text:q});render();let r=askT0(q);if(!r)r=await askT3(q);state.chat.push(r?{role:'bot',text:r.answer,source:r.source}:{role:'bot',text:'No T0 match. Add BYOK key in Settings for T3.',source:'system'});persistUI();render()}
+
+function openModal(type){const modal=$('#modal');const title=$('#modalTitle');const body=$('#modalBody');modal.classList.add('open');
+  if(type==='settings'){title.textContent='Settings';body.innerHTML=`<div class="field"><label>Anthropic key (T3)</label><input type="password" id="sKey" value="${esc(state.settings.anthropicKey||'')}"></div><div style="margin:10px 0"><label style="font-size:12px"><input type="checkbox" id="sAudit" ${state.settings.auditChain?'checked':''}> Audit chain</label></div><div class="actions"><button class="btn ghost sm" onclick="exportAll()">Export</button><button class="btn ghost sm" onclick="importAll()">Import</button><button class="btn danger sm" onclick="wipeAll()">Wipe</button><button class="btn brass" onclick="saveSettings()">Save</button><button class="btn ghost" onclick="closeModal()">Cancel</button></div>`}}
+function closeModal(){$('#modal').classList.remove('open')}
+function saveSettings(){state.settings.anthropicKey=$('#sKey').value.trim();state.settings.auditChain=$('#sAudit').checked;$('#tierBadge').textContent=state.settings.anthropicKey?'T3':'T0';persistUI();closeModal();toast('Saved');render()}
+function exportAll(){const d={tool:TOOLNAME,v:VERSION,ts:now(),firm:state.firm,patients:state.patients};const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='fallcliniconboard-export.json';a.click();URL.revokeObjectURL(u);toast('Exported')}
+function importAll(){const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.firm){state.firm=d.firm;await idbPut('firms',d.firm)}if(Array.isArray(d.patients))for(const p of d.patients){state.patients.push(p);await idbPut('patients',p)}persistUI();toast('Imported');render()}catch(e){toast('Failed')}};inp.click()}
+async function wipeAll(){if(!confirm('Wipe ALL data?'))return;for(const s of['patients','firms','audit','state']){const tx=db.transaction(s,'readwrite');tx.objectStore(s).clear();await new Promise(r=>{tx.oncomplete=r})}location.reload()}
+
+async function seedDemo(){if(state.patients.length||state.firm)return;
+  const firm={id:uid('fi'),name:'Demo Medical Centre',address:'1 Harley Street, London W1G 9QD',email:'reception@democlinic.nhs.uk',phone:'020 7123 4567',cqcRegistration:'CQC-1-234567890',icoRegistration:'ZA123456',caldicottGuardian:'Dr Sarah Williams',updatedAt:now(),isDemo:true};
+  state.firm=firm;await idbPut('firms',firm);
+
+  const p1=newPatientRec();p1.id=uid('pt');p1.ts=now();p1.updatedAt=now();p1.status='complete';p1.isDemo=true;
+  Object.assign(p1.demographics,{title:'Mrs',firstName:'Margaret',lastName:'Thompson',dob:'1952-03-14',sex:'Female',nhsNumber:'9434765919',address:'42 Oak Lane, London N1 3RT',postcode:'N1 3RT',phone:'07700 900123',email:'m.thompson@email.co.uk',nokName:'John Thompson',nokRelation:'Husband',nokPhone:'07700 900124',registeredGP:'Dr A. Patel',gpPractice:'The Surgery'});
+  Object.assign(p1.medical,{conditions:['Type 2 diabetes','Hypertension','Osteoarthritis'],allergies:[{allergen:'Penicillin',reaction:'Rash and swelling',severity:'moderate'},{allergen:'Ibuprofen',reaction:'GI bleeding',severity:'severe'}],medications:['Metformin 500mg BD','Amlodipine 5mg OD','Paracetamol 1g QDS PRN'],smokingStatus:'ex',alcoholUnits:6,familyHistory:'Father: MI age 62. Mother: breast cancer age 71.'});
+  Object.assign(p1.consent,{gdprConsent:true,gdprConsentDate:now()-90*86400000,treatmentConsent:true,treatmentConsentDate:now()-90*86400000,dataSharing:true,dataSharingOrgs:'NHS Digital, local hospital trust',electronicComms:true});
+  state.patients.push(p1);await idbPut('patients',p1);
+
+  const p2=newPatientRec();p2.id=uid('pt');p2.ts=now();p2.updatedAt=now();p2.status='new';p2.isDemo=true;
+  Object.assign(p2.demographics,{title:'Mr',firstName:'Amir',lastName:'Hassan',dob:'1988-07-22',sex:'Male',nhsNumber:'',address:'15 Elm Road, London E2 7QP',postcode:'E2 7QP',phone:'07700 900456',email:'a.hassan@email.co.uk',interpreterNeeded:true,interpreterLanguage:'Arabic'});
+  state.patients.push(p2);await idbPut('patients',p2);
+  await auditLog('demo.seeded',{reasoning:'first boot'});await persistUI();
+}
+
+(async function boot(){try{await openDB();await loadAll();await seedDemo();initMesh();$('#tierBadge').textContent=state.settings.anthropicKey?'T3':'T0';render()}catch(e){console.error('[fallcliniconboard] boot error:',e);document.getElementById('view').innerHTML='<div class="empty"><h3>Boot error</h3><p>'+esc(e.message)+'</p></div>'}})();
+</script>
+</body>
+</html>
