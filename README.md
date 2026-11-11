@@ -35,4 +35,4 @@ Register patients with a 6-step wizard capturing demographics, medical history, 
 
 ## Licence
 
-MIT · Simon Gant · prime 929 · ◊·κ=1.
+MIT · Simon Gant.
